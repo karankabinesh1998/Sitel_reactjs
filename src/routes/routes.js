@@ -86,6 +86,19 @@ export default function Routes() {
       />
 
 
+<Route
+        exact
+        path={'/speachtotext'}
+        render={(props) => (
+          <React.Fragment>
+              <Header {...props}/>
+             <EditPost {...props} />
+          
+          </React.Fragment>
+        )}
+      />
+
+
    
 
  </BrowserRouter>

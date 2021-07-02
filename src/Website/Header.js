@@ -52,7 +52,7 @@ class Header extends Component {
         <a class="nav-link " href="/trans">Task2</a>
       </li>
       <li class="nav-item ">
-        <a class="nav-link" href="#">Menu 5 <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/speachtotext">Menu 5 <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Menu 6</a>

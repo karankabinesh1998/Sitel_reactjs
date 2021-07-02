@@ -1,91 +1,82 @@
-import React, { Component } from 'react';
-import Bridge from '../Middleware/bridge';
+import React, { useState, useEffect } from 'react'
+import './AD.css';
 
-class EditPost extends Component {
-  constructor(props)
-  {
-      super(props)
-      {
-          this.state=
-          {
-            PostData:[]
-          }
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition
+const mic = new SpeechRecognition()
 
-        }
+mic.continuous = true
+mic.interimResults = true
+mic.lang = 'en-US'
 
+function EditPost() {
+  const [isListening, setIsListening] = useState(false)
+  const [note, setNote] = useState(null)
+  const [savedNotes, setSavedNotes] = useState([])
+
+  useEffect(() => {
+    handleListen()
+  }, [isListening])
+
+  const handleListen = () => {
+    if (isListening) {
+      mic.start()
+      mic.onend = () => {
+        console.log('continue..')
+        mic.start()
       }
-
-
-      async componentDidMount(){
-        try{
-
-          let id = this.props.match.params.id
-          // console.log(this.props.match.params.id);
-
-          let result = await Bridge.GetPostsById(id);
-          if(result.data.length){
-            
-              this.setState({
-                PostData:result.data[0]
-              })
-
-              // console.log(this.state.PostData.post);
-          }
-
-        }catch(error){
-          console.log(error);
-        }
+    } else {
+      mic.stop()
+      mic.onend = () => {
+        console.log('Stopped Mic on Click')
       }
+    }
+    mic.onstart = () => {
+      console.log('Mics on')
+    }
 
-      HandleChange=async(e)=>{
-        const { PostData } = this.state;
-
-        if(e.target.name == 'title'){
-          PostData.title = e.target.value
-        }else if(e.target.name == 'author'){
-          PostData.author = e.target.value
-        }else{
-          PostData.post = e.target.value
-        }
-
-        this.setState({
-          PostData
-        })
+    mic.onresult = event => {
+      const transcript = Array.from(event.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+        .join('')
+      console.log(transcript)
+      setNote(transcript)
+      mic.onerror = event => {
+        console.log(event.error)
       }
-
-  render() {
-    const{PostData}= this.state;
-    return (
-      <React.Fragment>
-
-<div class="container">
-        
-        <h1>Editing Post</h1>
-        
-            <hr/>
-            <h2>Edit:</h2>
-            <form action={`http://localhost:5000/sitel/updatepost/${PostData.id}`} method='POST'>
-                <label for="title">Title:</label>
-                <input class="form-control" required = "required" type="text" name='title' id='title' onChange={this.HandleChange} value={PostData.title} aria-label="Enter Title"/>
-                <br/>
-                <label for="author">Author:</label>
-                <input class="form-control" required = "required" type="text" name='author' id='author' onChange={this.HandleChange} value={PostData.author} aria-label="Enter Author"/>
-                <br/>
-                <label for="content">Post:</label>
-                <textarea class="form-control" required = "required" name='post' id="content" onChange={this.HandleChange} aria-label="Enter Content" value={PostData.post} rows="3"></textarea>
-                <br/>
-                <input type='submit' value='Save'/>
-            </form>
-            <hr/>
-        
-            </div>
-
-             
-      </React.Fragment>
-        
-      
-    );
+    }
   }
+
+  const handleSaveNote = () => {
+    setSavedNotes([...savedNotes, note])
+    setNote('')
+  }
+
+  return (
+    <>
+      <h1>Voice Notes</h1>
+      <div className="container1">
+        <div className="box2">
+          <h2>Current Note</h2>
+          {isListening ? <span>🎙️</span> : <span>🛑🎙️</span>}
+          <button className="button2" onClick={handleSaveNote} disabled={!note}>
+            Save Note
+          </button>
+          <button className="button2" onClick={() => setIsListening(prevState => !prevState)}>
+            Start/Stop
+          </button>
+          <p>{note}</p>
+        </div>
+        <div className="box2">
+          <h2>Notes</h2>
+          {savedNotes.map(n => (
+            <p key={n}>{n}</p>
+          ))}
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default EditPost;
