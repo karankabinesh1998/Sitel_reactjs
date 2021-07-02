@@ -68,12 +68,12 @@ function EditPost() {
           </button>
           <p>{note}</p>
         </div>
-        <div className="box2">
+        {/* <div className="box2">
           <h2>Notes</h2>
           {savedNotes.map(n => (
             <p key={n}>{n}</p>
           ))}
-        </div>
+        </div> */}
       </div>
     </>
   )
