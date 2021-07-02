@@ -112,7 +112,7 @@ class Homepage extends Component {
     return(
       <div class="dropdown">
         <span data-toggle="modal"
-                   data-target="#componentsor" onClick={()=>this.OnmclickInfo(d)} >{text}<BsInfoCircle style={{cursor:"pointer"}} size={20} /></span>
+                   data-target="#componentsor" onClick={()=>this.OnmclickInfo(d)} ><BsInfoCircle style={{cursor:"pointer"}} size={20} />{text}</span>
       </div>
     )
   }
