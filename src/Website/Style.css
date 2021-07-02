@@ -1,0 +1,10 @@
+@media screen and (max-width: 639px) {
+    .mobileresp{
+      width: 100% !important;
+    }
+    
+  }
+
+  .desKtop{
+      width: 20% ;
+  }
