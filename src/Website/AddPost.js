@@ -15,7 +15,8 @@ class AddPost extends Component {
       TextFile:[],
       PuncH :"",
       filepath:"",
-      Title:""
+      Title:"",
+      SizeofAudio:true
     }
   }
 
@@ -46,8 +47,19 @@ class AddPost extends Component {
     console.log(error);
   }
 
+
+ 
+
+
     
   }
+
+  ExpandAndCollapse=async()=>{
+
+    this.setState({
+     SizeofAudio : !this.state.SizeofAudio
+    })
+     }
 
   render() {
     const { someJsonFile } = this.state
@@ -93,11 +105,33 @@ class AddPost extends Component {
 {/* <button className="btn btn-dark" style={{marginLeft: '103%'}} >Review</button> */}
 </span>
 
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+
+    <div className="row form-group">
+                <div className="col-sm-2"><button className="btn btn-success" onClick={this.ExpandAndCollapse} >Audio Player</button></div>
+   </div>
+   <br/>
+
+    <button className="btn btn-dark"  data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample"  >About Keywords</button>
+  
+    <div class="collapse" id="collapseExample1">
+  <div class="card card-body">
+
+  There is a day. About ten years ago when I asked a friend to hold a baby dinosaur robot upside down. It was a toy called plea. All that he'd ordered and I was really excited about it because I've always loved about this one has really caught technical features. It had more orders and touch sensors. It had an infra red camera and one of the things that had was a tilt sensor so it. Knew what direction. It was facing. If and when you held it upside down. I thought. It's a super courts are showing off to my friend and I said to hold it, but he'll see what debts. We were watching the theatrics of this robe that struggle and cry out and and after a few seconds. The first. After my little and I said o.k. That's enough. Now, let's put him back down and pepper, about to make it. Stop crying and I was kind of a weird experience for me one thing, wasn't the most maternal person at the time. Although, since then I've become a mother and nine months ago. And that is a score when hold them up to now, but my response to this robot was also interesting because I knew exactly how this machine work it. And yet. I still felt compelled to be kind to it. And that observation sparked that curiosity that I spent the fat, the past decade pursuing it. Why did they comfort this robe. One of the things I discovered was that my treatment of this machine was more than just an awkward moment in my living room that in a world were increasingly integrating robots into our lives and things like that might actually have consequences because the first thing that I discovered is that. It's not just me in two thousand seven. The Washington Post reported that the United States military was testing this robot diffused landmines. 
+
+    </div>
+    </div>
+
+  </div>
+</div>
+
 <br/> <br/>
 
 
 <div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+  <div class="tab-pane fade show active" style={{width: this.state.SizeofAudio ? "100%" : "50%" }} id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
    <div style={{width:'100%'}}>
 <div className="row form-group">
@@ -162,7 +196,7 @@ class AddPost extends Component {
    <p>By Sitel Developers</p>
 
   </div>
-  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+  <div class="tab-pane fade"  id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
 
   <h4>Transcript Text Files :-</h4>
 
