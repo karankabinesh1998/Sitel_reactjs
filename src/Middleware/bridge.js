@@ -109,6 +109,14 @@ const GetPostsById = async (id) => {
         return result;
       };
 
+      const getaudioorvideo = async () => {
+      
+        const result = await http.get(ACCESS_POINT + `/sitel/getaudioorvideo`);
+        return result;
+      };
+
+      
+
 
     const UpdateLocation = async(id,body)=>{
       const result = await http.put(
@@ -158,6 +166,7 @@ const deleteDeatils = async (id) => {
 
 export default {
   GetRuleByValueandLabel,
+  getaudioorvideo,
   UpdateRule,
   GetLocationByValueandLabel,
   UpdateLocation,

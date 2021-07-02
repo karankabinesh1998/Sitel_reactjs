@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 // import LogoImage from './lorem.jpg';
 import TranscriptEditor from "@bbc/react-transcript-editor";
-import TestJson from './TestJson.json';
+import TestJson1 from './TestJson.json';
+import { ACCESS_POINT } from '../config/index';
+import bridge from '../Middleware/bridge';
+
 
 
 class AddPost extends Component {
@@ -10,23 +13,38 @@ class AddPost extends Component {
     this.state={
       someJsonFile:[],
       TextFile:[],
-      PuncH :""
+      PuncH :"",
+      filepath:"",
+      Title:""
     }
   }
 
   async componentDidMount(){
+   try{
 
+    let result = await bridge.getaudioorvideo();
+    if(result.data.length){
+      console.log(result.data);
+      this.setState({
+        filepath:result.data[0].filepath,
+        Title:result.data[0].filename,
+        // TestJson : JSON.parse(result.data[0].TestJson)
+      })
+    }
     let someJsonFile = [{ival:"hello"}]
     someJsonFile = JSON.stringify(someJsonFile)
 
-    let TextFile = TestJson.retval.words
-    let PuncH = TestJson.retval.punct
+    let TextFile = TestJson1.retval.words
+    let PuncH = TestJson1.retval.punct
 
     this.setState({
       someJsonFile,
       TextFile,
       PuncH
     })
+  }catch(error){
+    console.log(error);
+  }
 
     
   }
@@ -39,7 +57,7 @@ class AddPost extends Component {
 
 <div class="container" >
         <br/>
-<h4>Calls / IHKXNJLbjUn09UzuT767</h4>
+<h4 style={{color:"lightslategrey"}}>Calls / IHKXNJLbjUn09UzuT767</h4>
 <br/>
 
 
@@ -65,11 +83,11 @@ class AddPost extends Component {
     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">July 10 2021</a>
     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">12:35 PM</a>
     <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Link</a>
-    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Appointment</a>
+    <a class="nav-item nav-link" id="nav-app-tab" data-toggle="tab" href="#nav-app" role="tab" aria-controls="nav-app" aria-selected="false">Appointment</a>
   </div>
 </nav>
 </div>
-<div className="col-sm-3"><button className="btn btn-dark"   >Review Form</button></div>
+<div className="col-sm-3"><button className="btn btn-dark"  data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"  >Review Form</button></div>
 </div>
 <span>
 {/* <button className="btn btn-dark" style={{marginLeft: '103%'}} >Review</button> */}
@@ -115,8 +133,9 @@ class AddPost extends Component {
 </div> 
 
 <TranscriptEditor
-  transcriptData={TestJson}
-  mediaUrl={"https://download.ted.com/talks/KateDarling_2018S-950k.mp4"}
+  transcriptData={TestJson1}
+  mediaUrl={`${ACCESS_POINT}/sitel/filename/${this.state.filepath}`}
+  // mediaUrl={"https://youtu.be/WUMMnpj5ZzM"}
   handleAutoSaveChanges={this.handleAutoSaveChanges}
   autoSaveContentType={"digitalpaperedit"}
   isEditable={true}
@@ -152,6 +171,11 @@ class AddPost extends Component {
 <p>
   {this.state.PuncH}
 </p>
+
+  </div>
+  <div class="tab-pane fade" id="nav-app" role="tabpanel" aria-labelledby="nav-app-tab">
+
+    {/* dfk;l */}
 
   </div>
 </div>
