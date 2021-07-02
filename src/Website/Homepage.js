@@ -473,7 +473,6 @@ ChangeCoach=async(e,d)=>{
       const Submit = await Bridge.AddDetails(formData);
       if(Submit){
         console.log(Submit);
-
         let arr ={}
         arr.id = Submit.data.insertId;
         arr.location = selectedlocation.value;
@@ -482,18 +481,24 @@ ChangeCoach=async(e,d)=>{
         arr.rulename = selectedrule.label;
         arr.description = description;
         arr.modified_At = ModiDate;
-        arr.createdBy = Userdetails[0].id;
+        arr.createdBy = Userdetails[0].username;
         arr.username = Userdetails[0].username;
         arr.Component_indicator = Componets1;
+        arr.ModifiedUser=Userdetails[0].username;
         arr.status = 1;
-        arr.coach = 1
+        arr.coach = 1;
+        arr.createdAt = moment().format('YYYY-MM-DD HH:MM:SS')
         // arr.createdAt = new Date();
         console.log(arr);
         let newdate = [arr,...this.state.Data]
         console.log(newdate);
 
         this.setState({
-          Data : newdate
+          Data : newdate,
+          description:"",
+          Componets1:{checkAggravated:false,checkAngry:false,checkannoyed:false,checkdisappointed:false},
+          selectedlocation:{},
+          selectedrule:{},
         })
 
 
